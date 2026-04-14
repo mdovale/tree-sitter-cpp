@@ -7,7 +7,7 @@ let package = Package(
         .library(name: "TreeSitterCPP", targets: ["TreeSitterCPP"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/tree-sitter/swift-tree-sitter", from: "0.9.0"),
+        .package(name: "SwiftTreeSitter", url: "https://github.com/tree-sitter/swift-tree-sitter", from: "0.9.0"),
     ],
     targets: [
         .target(
@@ -19,19 +19,19 @@ let package = Package(
                 "src/scanner.c",
             ],
             resources: [
-                .copy("queries")
+                .copy("queries"),
             ],
             publicHeadersPath: "bindings/swift",
-            cSettings: [.headerSearchPath("src")]
+            cSettings: [.headerSearchPath("src")],
         ),
         .testTarget(
             name: "TreeSitterCPPTests",
             dependencies: [
-                .product(name: "SwiftTreeSitter", package: "swift-tree-sitter"),
+                "SwiftTreeSitter",
                 "TreeSitterCPP",
             ],
-            path: "bindings/swift/TreeSitterCPPTests"
-        )
+            path: "bindings/swift/TreeSitterCPPTests",
+        ),
     ],
-    cLanguageStandard: .c11
+    cLanguageStandard: .c11,
 )
